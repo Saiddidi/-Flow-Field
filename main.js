@@ -1,4 +1,4 @@
-var inc = 0.1;
+var inc = 0.07;
 var scl = 10;
 var cols, rows;
 var zoff = 0;
@@ -12,7 +12,7 @@ function setup() {
   rows = floor(height / scl);
   flowfield = new Array(cols * rows);
 
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < 1000; i++) {
     particles[i] = new Particle();
   }
   background(0);
