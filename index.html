@@ -5,12 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Flow Field</title>
 </head>
 
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
+    <div class="menu-toggle" id="menuToggle">
+        <div class="menu-icon">
+            &#9776;
+        </div>
+        <div class="menu-content" id="menuContent">
+            <button id="stopButton">Stop Animation</button>
+            <button id="saveButton">Save as HD JPEG</button>
+        </div>
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.10.0/p5.js"></script>
     <script src="particle.js"></script>
     <script src="main.js"></script>
 </body>

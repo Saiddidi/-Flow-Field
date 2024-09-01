@@ -1,33 +1,26 @@
-// Daniel Shiffman
-// https://thecodingtrain.com/CodingChallenges/024-perlinnoiseflowfield.html
-
 var inc = 0.1;
 var scl = 10;
 var cols, rows;
-
 var zoff = 0;
-
-var fr;
-
 var particles = [];
-
 var flowfield;
+var animationRunning = true; // To control the animation state
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   cols = floor(width / scl);
   rows = floor(height / scl);
-  fr = createP("");
-
   flowfield = new Array(cols * rows);
 
   for (var i = 0; i < 300; i++) {
     particles[i] = new Particle();
   }
-  background(51);
+  background(0);
 }
 
 function draw() {
+  if (!animationRunning) return; // Stop drawing if the animation is paused
+
   var yoff = 0;
   for (var y = 0; y < rows; y++) {
     var xoff = 0;
@@ -38,16 +31,8 @@ function draw() {
       v.setMag(1);
       flowfield[index] = v;
       xoff += inc;
-      stroke(0, 50);
-      // push();
-      // translate(x * scl, y * scl);
-      // rotate(v.heading());
-      // strokeWeight(1);
-      // line(0, 0, scl, 0);
-      // pop();
     }
     yoff += inc;
-
     zoff += 0.0003;
   }
 
@@ -57,9 +42,34 @@ function draw() {
     particles[i].edges();
     particles[i].show();
   }
+}
 
-  // fr.html(floor(frameRate()));
-}
+// Handle window resizing
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight); // Adjusts the canvas size when the window is resized
+  resizeCanvas(windowWidth, windowHeight);
+  cols = floor(width / scl);
+  rows = floor(height / scl);
+  flowfield = new Array(cols * rows);
+
+  // Optionally reset the particle positions (optional depending on desired effect)
+  for (var i = 0; i < particles.length; i++) {
+    particles[i].pos = createVector(random(width), random(height));
+    particles[i].prevPos = particles[i].pos.copy(); // Reset their previous positions
+  }
 }
+
+// Toggle menu functionality
+document.getElementById("menuToggle").addEventListener("click", function () {
+  this.classList.toggle("active");
+});
+
+// Stop button functionality
+document.getElementById("stopButton").addEventListener("click", function () {
+  animationRunning = !animationRunning;
+  this.textContent = animationRunning ? "Stop Animation" : "Start Animation";
+});
+
+// Save button functionality
+document.getElementById("saveButton").addEventListener("click", function () {
+  saveCanvas("flowfield", "jpg");
+});
