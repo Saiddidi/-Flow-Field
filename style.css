@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
 }
-/* Ensure the canvas always fills the viewport */
+/* CSS styles remain the same */
 canvas {
   display: block;
   width: 100vw;

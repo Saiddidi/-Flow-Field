@@ -7,19 +7,19 @@ var flowfield;
 var animationRunning = true; // To control the animation state
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(3840, 2160);
   cols = floor(width / scl);
   rows = floor(height / scl);
   flowfield = new Array(cols * rows);
 
-  for (var i = 0; i < 1000; i++) {
+  for (var i = 0; i < 4500; i++) {
     particles[i] = new Particle();
   }
   background(0);
 }
 
 function draw() {
-  if (!animationRunning) return; // Stop drawing if the animation is paused
+  if (!animationRunning) return;
 
   var yoff = 0;
   for (var y = 0; y < rows; y++) {
@@ -44,32 +44,24 @@ function draw() {
   }
 }
 
-// Handle window resizing
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  cols = floor(width / scl);
-  rows = floor(height / scl);
-  flowfield = new Array(cols * rows);
-
-  // Optionally reset the particle positions (optional depending on desired effect)
-  for (var i = 0; i < particles.length; i++) {
-    particles[i].pos = createVector(random(width), random(height));
-    particles[i].prevPos = particles[i].pos.copy(); // Reset their previous positions
-  }
-}
-
-// Toggle menu functionality
 document.getElementById("menuToggle").addEventListener("click", function () {
   this.classList.toggle("active");
 });
 
-// Stop button functionality
 document.getElementById("stopButton").addEventListener("click", function () {
   animationRunning = !animationRunning;
   this.textContent = animationRunning ? "Stop Animation" : "Start Animation";
 });
 
-// Save button functionality
 document.getElementById("saveButton").addEventListener("click", function () {
+  let originalWidth = width;
+  let originalHeight = height;
+
+  // Temporarily set the canvas to the desired resolution if it differs from the display size
+  resizeCanvas(3840, 2160);
+  draw(); // Re-render the flow field at the higher resolution
   saveCanvas("flowfield", "jpg");
+
+  // Restore the original canvas size if needed
+  resizeCanvas(originalWidth, originalHeight);
 });
